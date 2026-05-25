@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Um convite especial 💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ffe0f0 0%, #f0e0ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 12px 40px #d6338430;
+      padding: 2.5rem 2rem;
+      max-width: 420px;
+      width: 95%;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      animation: fadeIn 0.5s ease;
+    }
+    .screen.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: #d63384;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: #6c3483;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .gif-box {
+      font-size: 5rem;
+      margin: 0.8rem 0 1.2rem;
+      animation: bounce 1s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-12px); }
+    }
+
+    .hearts {
+      font-size: 2rem;
+      animation: pulse 1.2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.2); }
+    }
+
+    .btn-yes {
+      background: #d63384;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 15px #d6338455;
+    }
+    .btn-yes:hover {
+      transform: scale(1.07);
+      box-shadow: 0 6px 20px #d6338477;
+    }
+
+    .btn-no {
+      background: white;
+      color: #999;
+      border: 2px solid #ddd;
+      border-radius: 50px;
+      padding: 0.7rem 1.8rem;
+      font-size: 0.95rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      position: absolute;
+      transition: none;
+    }
+
+    .btn-wrap {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 0.6rem 0;
+      width: 100%;
+      max-width: 300px;
+    }
+    .input-group label {
+      font-weight: 700;
+      color: #6c3483;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .input-group input {
+      padding: 0.7rem 1rem;
+      border: 2px solid #e8a0c0;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      color: #333;
+      outline: none;
+      background: #fff0f8;
+    }
+    .input-group input:focus { border-color: #d63384; }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin: 1rem 0;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    .food-card {
+      background: #fff0f8;
+      border: 2px solid #f8c0da;
+      border-radius: 16px;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .food-card:hover {
+      background: #fce4f0;
+      border-color: #d63384;
+      transform: scale(1.04);
+    }
+    .food-card.selected {
+      background: #d63384;
+      border-color: #a01060;
+    }
+    .food-card .food-emoji { font-size: 2.5rem; }
+    .food-card .food-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #6c3483;
+    }
+    .food-card.selected .food-name { color: white; }
+
+    .confetti-line {
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      margin: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Tela 1: Convite -->
+  <div id="s1" class="screen active">
+    <div class="hearts">💕 💖 💕</div>
+    <div class="gif-box">🐱</div>
+    <div class="title">Oi, você! 🌸</div>
+    <div class="subtitle">Tenho uma perguntinha muito importante...</div>
+    <p style="color:#6c3483;font-size:1rem;margin-bottom:1.5rem;max-width:280px;font-weight:700;">
+      Você toparia sair comigo? 🥺👉👈
+    </p>
+    <div class="btn-wrap">
+      <button class="btn-yes" onclick="goTo('s2')">✨ Sim! ✨</button>
+      <button class="btn-no" id="noBtn"
+        onmouseover="runAway(this)"
+        ontouchstart="runAway(this)">Não</button>
+    </div>
+  </div>
+
+  <!-- Tela 2: Bob Esponja dançando -->
+  <div id="s2" class="screen">
+    <div class="gif-box" style="animation:bounce 0.4s infinite alternate;font-size:4.5rem;">🧽</div>
+    <div class="title">YEEES! 🎉</div>
+    <div class="subtitle">Você disse SIM! Isso é incrível!</div>
+    <p style="color:#6c3483;font-size:1rem;margin-bottom:1.5rem;font-weight:700;">
+      Bob Esponja está comemorando em seu nome 🕺💃
+    </p>
+    <button class="btn-yes" onclick="goTo('s3')">Eba! Quando? 📅</button>
+  </div>
+
+  <!-- Tela 3: Data e horário -->
+  <div id="s3" class="screen">
+    <div class="gif-box">📅</div>
+    <div class="title">Que data fica bom?</div>
+    <div class="subtitle">Me conta quando você pode! 🗓️</div>
+    <div class="input-group">
+      <label>📆 Qual dia?</label>
+      <input type="date" id="dateInput" />
+    </div>
+    <div class="input-group">
+      <label>🕐 Que horário?</label>
+      <input type="time" id="timeInput" />
+    </div>
+    <button class="btn-yes" style="margin-top:1.2rem;" onclick="goToFood()">Próximo 🍽️</button>
+  </div>
+
+  <!-- Tela 4: Escolha de comida -->
+  <div id="s4" class="screen">
+    <div class="gif-box">🍕</div>
+    <div class="title">E a comida? 🤤</div>
+    <div class="subtitle">O que te dá mais vontade?</div>
+    <div class="food-grid">
+      <div class="food-card" onclick="selectFood(this,'Pizza')">
+        <div class="food-emoji">🍕</div>
+        <div class="food-name">Pizza</div>
+      </div>
+      <div class="food-card" onclick="selectFood(this,'Burguer')">
+        <div class="food-emoji">🍔</div>
+        <div class="food-name">Burguer</div>
+      </div>
+      <div class="food-card" onclick="selectFood(this,'Italiano')">
+        <div class="food-emoji">🍝</div>
+        <div class="food-name">Italiano</div>
+      </div>
+      <div class="food-card" onclick="selectFood(this,'Lanches')">
+        <div class="food-emoji">🥪</div>
+        <div class="food-name">Lanches</div>
+      </div>
+    </div>
+    <button class="btn-yes" id="foodBtn" style="display:none;margin-top:0.8rem;" onclick="goToFinal()">Perfeito! 🎊</button>
+  </div>
+
+  <!-- Tela 5: Final -->
+  <div id="s5" class="screen">
+    <div class="confetti-line">🎉✨💖🎉✨💖</div>
+    <div class="gif-box" style="font-size:4rem;">🥹</div>
+    <div class="title">Mal posso esperar!</div>
+    <div class="subtitle" id="finalMsg">Isso vai ser incrível!</div>
+    <p style="color:#d63384;font-size:1rem;font-weight:700;max-width:300px;margin-top:0.5rem;">
+      Não acredito que você disse sim... você fez o meu dia! 💕🐱
+    </p>
+    <div class="confetti-line" style="margin-top:1rem;">💖✨🎊✨💖</div>
+  </div>
+
+</div>
+
+<script>
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function runAway(btn) {
+    const wrap = btn.parentElement;
+    const wrapRect = wrap.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const match = (btn.style.transform || '').match(/translate\(([^,]+)px,\s*([^)]+)px\)/);
+    const cx = match ? parseFloat(match[1]) : 0;
+    const cy = match ? parseFloat(match[2]) : 0;
+    let nx = cx + (Math.random() * 120 - 60);
+    let ny = cy + (Math.random() * 40 - 20);
+    nx = Math.max(-160, Math.min(160, nx));
+    ny = Math.max(-25, Math.min(25, ny));
+    btn.style.transform = `translate(${nx}px, ${ny}px)`;
+  }
+
+  let selectedFood = '';
+  window._finalDate = '';
+
+  function selectFood(el, name) {
+    document.querySelectorAll('.food-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedFood = name;
+    document.getElementById('foodBtn').style.display = 'inline-block';
+  }
+
+  function goToFood() {
+    const date = document.getElementById('dateInput').value;
+    const time = document.getElementById('timeInput').value;
+    const parts = [];
+    if (date) {
+      const d = new Date(date + 'T00:00:00');
+      parts.push(d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long' }));
+    }
+    if (time) parts.push('às ' + time);
+    window._finalDate = parts.length ? 'Te vejo ' + parts.join(' ') + '!' : 'Isso vai ser incrível!';
+    goTo('s4');
+  }
+
+  function goToFinal() {
+    const base = window._finalDate || 'Isso vai ser incrível!';
+    document.getElementById('finalMsg').textContent = base + ' Com ' + selectedFood + '! 😋';
+    goTo('s5');
+  }
+</script>
+</body>
+</html>
